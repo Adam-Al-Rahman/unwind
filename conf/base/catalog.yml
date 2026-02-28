@@ -1,0 +1,38 @@
+raw_ingestion.ds_daily_sales:
+  type: kedro_mlflow.io.artifacts.MlflowArtifactDataset
+  dataset:
+    type: pandas.CSVDataset
+    filepath: data/raw_ingestion/daily_sales_french_bakery.csv
+  metadata:
+    kedro-viz:
+      layer: raw_ingestion
+
+processed.preprocessed_daily_sales:
+  type: pandas.ParquetDataset
+  filepath: data/processed/01_primary/preprocessed_daily_sales.parquet
+  metadata:
+    kedro-viz:
+      layer: processed
+
+baseline_models.baseline_v0_forecasts:
+  type: pandas.ParquetDataset
+  filepath: data/models/predictions/baseline_v0_forecasts.parquet
+  metadata:
+    kedro-viz:
+      layer: models
+
+baseline_models.baseline_v0_evaluation:
+  type: pandas.ParquetDataset
+  filepath: data/reports/baseline_v0/baseline_v0_evaluation.parquet
+  metadata:
+    kedro-viz:
+      layer: reports
+
+baseline_models.baseline_v0_evaluation_result_plot:
+  type: matplotlib.MatplotlibDataset
+  filepath: data/reports/baseline_v0/baseline_v0_evaluation_result.png
+  save_args:
+    format: png
+  metadata:
+    kedro-viz:
+      layer: reports

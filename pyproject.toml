@@ -1,0 +1,59 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+requires-python = ">=3.10"
+name = "unwind"
+readme = "README.md"
+dynamic = ["version"]
+dependencies = ["ipython>=8.10", "jupyterlab>=3.0", "notebook", "kedro~=1.2.0"]
+
+[project.scripts]
+unwind = "unwind.__main__:main"
+
+[project.entry-points."kedro.hooks"]
+
+[project.optional-dependencies]
+dev = [
+    "pytest-cov>=3,<7",
+    "pytest-mock>=1.7.1, <2.0",
+    "pytest~=7.2",
+    "ruff~=0.12.0",
+]
+
+[tool.setuptools.dynamic.version]
+attr = "unwind.__version__"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+namespaces = false
+
+[tool.kedro]
+package_name = "unwind"
+project_name = "unwind"
+kedro_init_version = "1.2.0"
+tools = "['Linting']"
+example_pipeline = "False"
+source_dir = "src"
+
+[tool.ruff]
+line-length = 88
+show-fixes = true
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint]
+select = ["F", "W", "E", "I", "UP", "PL", "T201"]
+ignore = ["E501"]
+
+[tool.kedro_telemetry]
+project_id = "82693fe0f8814162b6f1fd9c5a24e1fa"
+
+[tool.marimo.runtime]
+output_max_bytes = 1_000_000_000
+pythonpath = ["src"]
+
+[tool.marimo.display]
+custom_css = ["./marimo.css"]

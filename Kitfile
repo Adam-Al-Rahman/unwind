@@ -1,0 +1,15 @@
+manifestVersion: 1.0.0
+package:
+  name: unwind
+  description: Time series with baseline and arima as candidate model
+  authors: [Adam Al-Rahman]
+code:
+  - path: src
+  - path: tests
+  - path: requirements.txt
+datasets:
+  - path: conf
+  - path: data
+docs:
+  - path: README.md
+    description: Readme file
