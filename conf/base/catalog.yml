@@ -36,3 +36,26 @@ baseline_models.baseline_v0_evaluation_result_plot:
   metadata:
     kedro-viz:
       layer: reports
+
+candidate_models.arima_forecasts:
+  type: pandas.ParquetDataset
+  filepath: data/07_model_output/arima_forecasts.parquet
+  metadata:
+    kedro-viz:
+      layer: model_output
+
+candidate_models.arima_evaluation:
+  type: pandas.ParquetDataset
+  filepath: data/08_reporting/arima_evaluation.parquet
+  metadata:
+    kedro-viz:
+      layer: report
+
+candidate_models.arima_evaluation_plot:
+  type: matplotlib.MatplotlibDataset
+  filepath: data/reports/candidate_arima/arima_evaluation_plot.png
+  save_args:
+    format: png
+  metadata:
+    kedro-viz:
+      layer: report

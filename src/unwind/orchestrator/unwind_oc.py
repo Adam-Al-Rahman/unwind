@@ -8,7 +8,7 @@ from prefect import flow, task
 @task(
     retries=3,
     retry_delay_seconds=60,
-    task_run_name="Kedro: {pipeline_name} ({node_names})",
+    task_run_name="Kedro Step: {pipeline_name} ({node_names})",
 )
 def run_kedro_step(pipeline_name: str, node_names: list[str] | None = None):
     project_path = Path.cwd()
@@ -22,19 +22,33 @@ def run_kedro_step(pipeline_name: str, node_names: list[str] | None = None):
 
 @flow(name="Unwind Time Series", log_prints=True)
 def unwind_orchestrator():
-
+    # 1. Baseline Pipeline
     run_kedro_step(pipeline_name="baseline_models", node_names=["preprocess_node"])
 
     run_kedro_step(
         pipeline_name="baseline_models", node_names=["train_and_forecast_node"]
     )
 
-    baseline_v0_evaluate = run_kedro_step(
+    run_kedro_step(
         pipeline_name="baseline_models",
         node_names=["evaluate_baseline_node", "baseline_v0_evaluation_plot"],
     )
 
-    return baseline_v0_evaluate
+    # 2. Candidate ARIMA Pipeline
+    run_kedro_step(
+        pipeline_name="candidate_models", node_names=["preprocess_node_candidate"]
+    )
+
+    run_kedro_step(
+        pipeline_name="candidate_models", node_names=["train_and_forecast_arima_node"]
+    )
+
+    candidate_arima_evaluate = run_kedro_step(
+        pipeline_name="candidate_models",
+        node_names=["evaluate_arima_node", "arima_evaluation_plot_node"],
+    )
+
+    return candidate_arima_evaluate
 
 
 if __name__ == "__main__":

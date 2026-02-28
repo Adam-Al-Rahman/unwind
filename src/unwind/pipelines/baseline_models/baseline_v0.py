@@ -113,15 +113,14 @@ def _():
         context = session.load_context()
         catalog = context.catalog
         raw_data = catalog.load("raw_ingestion.ds_daily_sales")
-
-    ds_train_itm = preprocess_sales_data(raw_data)
-    return (ds_train_itm,)
+    return (raw_data,)
 
 
 @app.cell
-def _(ds_train_itm):
+def _(raw_data):
+    ds_train_itm = preprocess_sales_data(raw_data)
     ds_train_itm
-    return
+    return (ds_train_itm,)
 
 
 @app.cell
@@ -182,7 +181,7 @@ def plot_baseline_v0_evaluation(evaluation_results: pd.DataFrame):
 
     ax.set_xlabel("Methods")
     ax.set_ylabel("Mean Absolute Error (MAE)")
-    ax.set_title("Baseline Models Performance")
+    ax.set_title("Models Performance")
 
     fig.tight_layout()
 
