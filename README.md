@@ -1,5 +1,7 @@
 # unwind
 
+[![Packaged with KitOps](https://img.shields.io/badge/Packaged%20with-KitOps-FFAF52?labelColor=363636)](https://kitops.org)
+
 `unwind` is a data science project focused on high-performance **time series forecasting** for daily sales data. It leverages a modern stack combining **Kedro** for pipeline engineering, **Prefect** for orchestration, and **StatsForecast** for modeling.
 
 
